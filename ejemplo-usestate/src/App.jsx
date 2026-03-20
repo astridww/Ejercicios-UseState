@@ -23,9 +23,9 @@ function App() {
     setResultado(division);
   };
 
-  const multiplicación = () => {
-    let multiplicación = numero1 * numero2;
-    setResultado(multiplicación);
+  const multiplicacion = () => {
+    let multiplicacion = numero1 * numero2;
+    setResultado(multiplicacion);
   };
 
   const [tarea, setTarea] = useState("");
@@ -36,9 +36,15 @@ function App() {
     setTarea("");
   };
 
+  const limpiar = () => {
+    setNumero1(0);
+    setNumero2(0);
+    setResultado(0);
+  };
+
   const handleDelete = (index) => {
-    const newArray = items.filter((item, i) => i !== index);
-    setItems(newArray);
+    const nuevasTareas = listadoTareas.filter((_, i) => i !== index);
+    setListadoTareas(nuevasTareas);
   };
 
   
@@ -63,7 +69,8 @@ function App() {
       <Boton texto="Sumar" onClick={sumar} />
       <Boton texto="Restar" onClick={resta} />
       <Boton texto="Dividir" onClick={division} />
-      <Boton texto="Multiplicar" onClick={multiplicación} />
+      <Boton texto="Multiplicar" onClick={multiplicacion} />
+      <Boton texto="Limpiar" onClick={limpiar}/>
       <p>Resultado: {resultado}</p>
 
       <h1>TODO: listado tareas</h1>
@@ -77,9 +84,13 @@ function App() {
       <Boton texto="Agregar tarea" onClick={agregarTarea} />
       <ul>
         {listadoTareas.map((tarea, index) => (
-          <li key={index}>{tarea}</li>
+          <li key={index}>{tarea}
+          <Boton texto="Eliminar" onClick={() => handleDelete(index)} />
+          </li>
         ))}
       </ul>
+
+      <h1>Registro de estudiantes</h1>
     </>
   );
 }
