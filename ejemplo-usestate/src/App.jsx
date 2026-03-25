@@ -2,11 +2,17 @@ import { useState } from "react";
 import "./App.css";
 import Boton from "./components/Boton";
 import InputText from "./components/InputText";
+import FormularioEstudiante from "./components/Formulario";
 
 function App() {
   const [numero1, setNumero1] = useState(0);
   const [numero2, setNumero2] = useState(0);
   const [resultado, setResultado] = useState(0);
+  const [estudiantes, setEstudiantes] = useState([]);
+
+  const [nombre, setNombre] = useState("");
+  const [edad, setEdad] = useState("");
+  const [carnet, setCarnet] = useState("");
 
   const sumar = () => {
     let suma = numero1 + numero2;
@@ -47,7 +53,19 @@ function App() {
     setListadoTareas(nuevasTareas);
   };
 
-  
+  const agregarEstudiante = () => {
+    const nuevo = {
+      nombre,
+      edad,
+      carnet
+    };
+
+    setEstudiantes([...estudiantes, nuevo]);
+
+    setNombre("");
+    setEdad("");
+    setCarnet("");
+  };
 
   //Metodo filter para eliminar una tarea
 
@@ -70,7 +88,7 @@ function App() {
       <Boton texto="Restar" onClick={resta} />
       <Boton texto="Dividir" onClick={division} />
       <Boton texto="Multiplicar" onClick={multiplicacion} />
-      <Boton texto="Limpiar" onClick={limpiar}/>
+      <Boton texto="Limpiar" onClick={limpiar} />
       <p>Resultado: {resultado}</p>
 
       <h1>TODO: listado tareas</h1>
@@ -85,12 +103,33 @@ function App() {
       <ul>
         {listadoTareas.map((tarea, index) => (
           <li key={index}>{tarea}
-          <Boton texto="Eliminar" onClick={() => handleDelete(index)} />
+            <Boton texto="Eliminar" onClick={() => handleDelete(index)} />
           </li>
         ))}
       </ul>
 
       <h1>Registro de estudiantes</h1>
+
+      <FormularioEstudiante
+        nombre={nombre}
+        edad={edad}
+        carnet={carnet}
+        setNombre={setNombre}
+        setEdad={setEdad}
+        setCarnet={setCarnet}
+        agregarEstudiante={agregarEstudiante}
+      />
+
+      <h2>Listado:</h2>
+
+      <ul>
+        {estudiantes.map((est, index) => (
+          <li key={index}>
+            Nombre: {est.nombre} | Edad: {est.edad} | Carnet: {est.carnet}
+          </li>
+        ))}
+      </ul>
+
     </>
   );
 }
